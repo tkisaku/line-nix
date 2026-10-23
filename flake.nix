@@ -23,6 +23,7 @@
           openssl
           osslsigncode
           wine
+          winetricks
         ];
         text = ''
                     set -o pipefail
@@ -38,6 +39,7 @@
             line-wine                         Start LINE
             line-wine --install LineInst.exe  Install or update LINE
             line-wine --winecfg               Open Wine configuration
+            line-wine --winetricks ARGS       Run winetricks
 
           Environment:
             LINE_WINEPREFIX  Override the Wine prefix (default: $XDG_DATA_HOME/line-wine)
@@ -165,6 +167,12 @@
                         wine "$installer"
                         wineserver --wait
                         exit 0
+                        ;;
+                      --winetricks)
+                        initialise_prefix
+                        shift
+                        WINE_BIN="$(dirname "$(readlink -f "$(command -v wine)")")/.wine" \
+                        exec winetricks "$@"
                         ;;
                       "")
                         initialise_prefix

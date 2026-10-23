@@ -67,6 +67,9 @@ Home Manager の場合は `home.packages` に同じパッケージを追加し�
 # Wine の設定画面を開く
 nix run . -- --winecfg
 
+# winetricks を実行する
+nix run . -- --winetricks ARGS
+
 # 別の Wine prefix を利用する
 LINE_WINEPREFIX="$HOME/.wine-line-test" nix run .
 ```
